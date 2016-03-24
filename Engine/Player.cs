@@ -134,7 +134,7 @@ namespace Engine
             foreach(QuestCompletionItem qci in quest.QuestCompletionItems)
             {
                 //Check each item in the player's inventory, to see if they have it, and enough of it
-                if (!Inventory.Exists(ii => ii.Details.Id == qci.Details.Id && ii.Quantity < qci.Quantity))
+                if (!Inventory.Exists(ii => ii.Details.Id == qci.Details.Id && ii.Quantity >= qci.Quantity))
                 {
                     return false;
                 }
