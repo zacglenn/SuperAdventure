@@ -9,8 +9,28 @@ namespace Engine
 {
     public class Player : LivingCreature
     {
-        public int Gold { get; set; }
-        public int ExperiencePoints { get; set; }
+        private int _gold;
+        private int _experiencePoints;
+
+        public int Gold
+        {
+            get { return _gold; }
+            set
+            {
+                _gold = value;
+                OnPropertyChanged("Gold");
+            }
+        }
+        public int ExperiencePoints
+        {
+            get { return _experiencePoints; }
+            set
+            {
+                _experiencePoints = value;
+                OnPropertyChanged("ExperiencePoints");
+                OnPropertyChanged("Level");
+            }
+        }
         public int Level
         {
             get { return ((ExperiencePoints / 100) + 1); }
@@ -20,20 +40,18 @@ namespace Engine
         public Location CurrentLocation { get; set; }
         public Weapon CurrentWeapon { get; set; }
 
-        //public Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
-        //{
-        //    Gold = gold;
-        //    ExperiencePoints = experiencePoints;
-        //    Inventory = new List<InventoryItem>();
-        //    Quests = new List<PlayerQuest>();
-        //}
-
         private Player(int currentHitPoints, int maximumHitPoints, int gold, int experiencePoints) : base(currentHitPoints, maximumHitPoints)
         {
             Gold = gold;
             ExperiencePoints = experiencePoints;
             Inventory = new List<InventoryItem>();
             Quests = new List<PlayerQuest>();
+        }
+
+        public void AddExperiencePoints(int experiencePointsToAdd)
+        {
+            ExperiencePoints += experiencePointsToAdd;
+            MaximumHitPoints = (Level * 10);
         }
 
         public static Player CreateDefaultPlayer()
